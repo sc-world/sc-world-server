@@ -40,9 +40,9 @@ jobs:
         remote_key: ${{ secrets.TEST_SERVER_KEY }}
 
     - name: Executing remote ssh commands
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.TEST_SERVER_HOST }}
-          username: ${{ secrets.TEST_SERVER_USER }}
-          key: ${{ secrets.TEST_SERVER_KEY }}
-          script: cd ${{ secrets.TEST_SERVER_PATH }} && npm install pinus
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.TEST_SERVER_HOST }}
+        username: ${{ secrets.TEST_SERVER_USER }}
+        key: ${{ secrets.TEST_SERVER_KEY }}
+        script: cd ${{ secrets.TEST_SERVER_PATH }} && npm install pinus
