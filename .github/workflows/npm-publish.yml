@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [14.x]
 
     steps:
     - uses: actions/checkout@v3
@@ -28,7 +28,8 @@ jobs:
       run: |
         npm install
         npm run build
-    - name: publish test server
+
+    - name: Publish
       uses: burnett01/rsync-deployments@5.2
       with:
         switches: -avzr --delete
@@ -37,3 +38,11 @@ jobs:
         remote_host: ${{ secrets.TEST_SERVER_HOST }}
         remote_user: ${{ secrets.TEST_SERVER_USER }}
         remote_key: ${{ secrets.TEST_SERVER_KEY }}
+
+    - name: Executing remote ssh commands
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.TEST_SERVER_HOST }}
+          username: ${{ secrets.TEST_SERVER_USER }}
+          key: ${{ secrets.TEST_SERVER_KEY }}
+          script: cd ${{ secrets.TEST_SERVER_PATH }} && npm install pinus
